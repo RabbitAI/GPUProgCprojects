@@ -16,6 +16,7 @@ void arraySum(int *a, int *b, int *c)
 int main()
 {
     int A[arrSize], B[arrSize], C[arrSize];
+    int *a_d, *b_d, *c_d;
     dim3 dimGrid(3, 1);
     dim3 dimBlock(blockSize, 1);
 
