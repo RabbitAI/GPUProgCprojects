@@ -37,19 +37,18 @@ int main()
         arraySum<<<dimGrid, dimBlock>>>(a_d, b_d, c_d);
 
         cudaMemcpy(C, c_d, blockSize, cudaMemcpyDeviceToHost);
-        
+
         cudaFree(a_d);
         cudaFree(b_d);
         cudaFree(c_d);
     }
 
-    // printf("%d", A[0]);
-    // printf("%c", ' ');
-    // printf("%d", A[arrSize-1]);
-    // printf("%c", '\n');
-    // printf("%d", B[0]);
-    // printf("%c", ' ');
-    // printf("%d", B[arrSize-1]);
+    printf("%s", "Array C's first element: ");
+    printf("%d", C[0]);
+    printf("%c", '\n');
+    printf("%s", "Last Element: ")
+    printf("%d", C[arrSize-1]);
+    
 
     return 0;
 }
