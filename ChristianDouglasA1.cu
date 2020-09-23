@@ -37,6 +37,7 @@ int main()
         arraySum<<<dimGrid, dimBlock>>>(a_d, b_d, c_d);
 
         cudaMemcpy(C, c_d, blockSize, cudaMemcpyDeviceToHost);
+        
         cudaFree(a_d);
         cudaFree(b_d);
         cudaFree(c_d);
