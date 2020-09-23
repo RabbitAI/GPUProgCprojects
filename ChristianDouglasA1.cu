@@ -5,10 +5,10 @@ const int arrSize = 4096;
 const int blockSize = 1024;
 
 __global__
-void arrayProduct(int *a, int *b, int *c)
+void arraySum(int *a, int *b, int *c)
 {
     
-    c[threadIdx.x] = a[threadIdx.x] * b[threadIdx.x]; 
+    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x]; 
     
 
 }
@@ -34,7 +34,7 @@ int main()
         cudaMemcpy(a_d, A, blockSize, cudaMemcpyHostToDevice);
         cudaMemcpy(b_d, B, blockSize, cudaMemcpyHostToDevice);
         cudaMemcpy(c_d, C, blockSize, cudaMemcpyHostToDevice);
-        arrayProduct<<<dimGrid, dimBlock>>>(a_d, b_d, c_d);
+        arraySum<<<dimGrid, dimBlock>>>(a_d, b_d, c_d);
 
         cudaMemcpy(C, c_d, blockSize, cudaMemcpyDeviceToHost);
         cudaFree(a_d);
