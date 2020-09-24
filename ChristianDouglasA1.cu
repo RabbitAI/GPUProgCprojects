@@ -7,17 +7,16 @@ const int blockSize = 1024;
 __global__
 void arraySum(int *a, int *b, int *c)
 {
-    
-    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x]; 
-    
+    i = blockIdx.x*dimBlock.x+threadIdx.x;
 
+    c[i] = a[i] + b[i]; 
 }
 
 int main()
 {
     int A[arrSize], B[arrSize], C[arrSize];
     int *a_d, *b_d, *c_d;
-    dim3 dimGrid(3, 1);
+    dim3 dimGrid(4, 1);
     dim3 dimBlock(blockSize, 1);
 
     for(int i = 0; i < arrSize; i++)
@@ -26,28 +25,27 @@ int main()
         B[i] = (arrSize-1)+i;
     }
 
-    for(int i = 0; i< arrSize; i*blockSize)
-    {
-        cudaMalloc((void**)&a_d, blockSize);
-        cudaMalloc((void**)&b_d, blockSize);
-        cudaMalloc((void**)&c_d, blockSize);
 
-        cudaMemcpy(a_d, A, blockSize, cudaMemcpyHostToDevice);
-        cudaMemcpy(b_d, B, blockSize, cudaMemcpyHostToDevice);
-        cudaMemcpy(c_d, C, blockSize, cudaMemcpyHostToDevice);
-        arraySum<<<dimGrid, dimBlock>>>(a_d, b_d, c_d);
+    cudaMalloc((void**)&a_d, arrSize);
+    cudaMalloc((void**)&b_d, arrSize);
+    cudaMalloc((void**)&c_d, arrSize);
 
-        cudaMemcpy(C, c_d, blockSize, cudaMemcpyDeviceToHost);
+    cudaMemcpy(a_d, A, arrSize, cudaMemcpyHostToDevice);
+    cudaMemcpy(b_d, B, arrSize, cudaMemcpyHostToDevice);
+    cudaMemcpy(c_d, C, arrSize, cudaMemcpyHostToDevice);
+    arraySum<<<dimGrid, dimBlock>>>(a_d, b_d, c_d);
 
-        cudaFree(a_d);
-        cudaFree(b_d);
-        cudaFree(c_d);
-    }
+    cudaMemcpy(C, c_d, arrSize, cudaMemcpyDeviceToHost);
+
+    cudaFree(a_d);
+    cudaFree(b_d);
+    cudaFree(c_d);
+    
 
     printf("%s", "Array C's first element: ");
     printf("%d", C[0]);
     printf("%c", '\n');
-    printf("%s", "Last Element: ")
+    printf("%s", "Last Element: ");
     printf("%d", C[arrSize-1]);
     
 
