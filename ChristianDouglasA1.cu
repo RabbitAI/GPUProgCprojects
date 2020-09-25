@@ -56,7 +56,7 @@ int main()
     cudaFree(c_d);
     
     //Prints the first and last values of the C array
-    //The values should be 4095 and 16182
+    //The values should be 4095 and 12186
     printf("%s", "Array C's first element: ");
     printf("%d", C[0]);
     printf("%c", '\n');
