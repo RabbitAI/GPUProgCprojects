@@ -8,7 +8,7 @@ const int blockSize = 1024;        //largest number of threads in a block
 //a, b, and c and adds the values from a and b and assigns them to c
 __global__
 void arraySum(int *a, int *b, int *c)
-{
+{ 
     int i = blockIdx.x * blockDim.x + threadIdx.x;
 
     c[i] = a[i] + b[i]; 
